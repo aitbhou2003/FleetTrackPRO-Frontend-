@@ -1,21 +1,38 @@
-import { useState } from "react";
+import {useState } from "react";
+import { loginUser } from "../api/auth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erorr, setErorr] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [user ,setUser] = useState(null)
+  const [token,setToken] = useState(null)
 
-  
+  async function handelLogin(e) {
+    e.preventDefault();
 
-  function handelSubmet(e) {
-    if (!email.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim) {
       setErorr("Veuillez remplir tous les champs");
       return;
     }
-    e.preventDefault();
-    console.log("donner de lagin ", email, password);
+
+    setLoading(true);
+    setErorr("");
+    setMessage("");
+    try {
+      const res = await loginUser(email, password);
+      setMessage(res.message);
+      console.log("this is the response",res);
+    } catch (error) {
+      setErorr(error.message);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   }
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div
@@ -34,8 +51,10 @@ export default function LoginForm() {
           </div>
         )}
 
+
+
         {/* <!-- Le formulaire --> */}
-        <form onSubmit={handelSubmet}>
+        <form onSubmit={handelLogin}>
           {/* <!-- Champ Identifiant / Email --> */}
           <div className="mb-3">
             <label className="form-label fw-semibold">Email</label>
@@ -61,9 +80,21 @@ export default function LoginForm() {
           </div>
 
           {/* <!-- Bouton de soumission --> */}
-          <button type="submit" className="btn btn-primary w-100 py-2 mt-2">
-            Se connecter
+          <button
+            type="submit"
+            className="btn btn-primary w-100 py-2 mt-2"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Login"}
           </button>
+
+
+        {message && (
+            <div className="alert alert-warning py-2 small mt-2 " role="alert">
+              {message}
+            </div>
+          )}
+
         </form>
       </div>
     </div>
