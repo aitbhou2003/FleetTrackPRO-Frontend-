@@ -10,14 +10,13 @@ export async function loginUser(email, password) {
         password: password,
       }),
     });
+    const data = await response.json();
 
-    // if (!response.ok) {
-    //   throw new Error(response.message||'field login');
-    
-    // }
-    // console.log(response.message);
-    
-    return response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "field login");
+    }
+
+    return data;
   } catch (error) {
     throw new Error(error.message);
   }
