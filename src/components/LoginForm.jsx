@@ -1,30 +1,29 @@
-import {useState } from "react";
+import { useState } from "react";
 import { loginUser } from "../api/auth";
+import { jwtDecode } from "jwt-decode";
 
-export default function LoginForm() {
+export default function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erorr, setErorr] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [user ,setUser] = useState(null)
-  const [token,setToken] = useState(null)
 
   async function handelLogin(e) {
     e.preventDefault();
 
-    if (!email.trim() || !password.trim) {
+    if (!email.trim() || !password.trim()) {
       setErorr("Veuillez remplir tous les champs");
       return;
     }
 
     setLoading(true);
     setErorr("");
-    setMessage("");
     try {
       const res = await loginUser(email, password);
-      setMessage(res.message);
-      console.log("this is the response",res);
+      const decodeUder = jwtDecode(res.token);
+      if (onLoginSuccess) {
+        onLoginSuccess(decodeUder, res.token);
+      }
     } catch (error) {
       setErorr(error.message);
       console.log(error);
@@ -50,8 +49,6 @@ export default function LoginForm() {
             {erorr}
           </div>
         )}
-
-
 
         {/* <!-- Le formulaire --> */}
         <form onSubmit={handelLogin}>
@@ -88,12 +85,6 @@ export default function LoginForm() {
             {loading ? "Loading..." : "Login"}
           </button>
 
-
-        {message && (
-            <div className="alert alert-warning py-2 small mt-2 " role="alert">
-              {message}
-            </div>
-          )}
 
         </form>
       </div>
