@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AppShell from "./components/AppShell";
 import LoginForm from "./components/LoginForm";
+import AdminLayout from "./components/AdminLayout";
+import DriverLayout from "./components/DriverLayout";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -17,15 +19,16 @@ export default function App() {
   if (!user) {
     return <LoginForm onLoginSuccess={handelLoginSuccess} />;
   }
+  console.log(user);
+
   return (
     <>
       <AppShell user={user} onLogout={handelLogOut}>
-        <div className="card shadow-sm p-4">
-          <h3>Bienvenue {user.role} !</h3>
-          <p className="text-muted">
-            Vous êtes bien connecté avec le token en mémoire.
-          </p>
-        </div>{" "}
+        {user.userRole === "admin" ? (
+          <AdminLayout token={token} />
+        ) : (
+          <DriverLayout token={token} user={user} />
+        )}
       </AppShell>
     </>
   );

@@ -11,9 +11,9 @@ export default function AppShell({ user, onLogout, children }) {
             {/* Si un utilisateur est connecté, on affiche son nom et son rôle */}
             {user && (
               <div className="text-light text-end">
-                <div className="fw-semibold">{user.nom}</div>
+                <div className="fw-semibold">{user.userFullName}</div>
                 <span className="badge bg-primary text-uppercase">
-                  {user.role}
+                  {user.userRole}
                 </span>
               </div>
             )}
