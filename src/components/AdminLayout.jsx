@@ -46,7 +46,7 @@ export default function AdminLayout({ token }) {
       {/* <!-- Zone d'affichage du contenu selon l'onglet sélectionné --> */}
       <div className="bg-white p-4 rounded shadow-sm border">
         {activeTabe == "trucks" ? (
-            <TruckList token={token} trucks={trucks} />
+            <TruckList token={token} trucks={trucks} setTrucks={setTrucks}/>
         ) : (
           <p className="text-muted">users</p>
         )}
