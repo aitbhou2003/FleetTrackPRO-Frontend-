@@ -1,8 +1,17 @@
 import { useState } from "react";
+import { getTrucks } from "../api/trucks";
+import TruckList from "./TruckList";
 
-export default function AdminLayout({token}) {
+export default function AdminLayout({ token }) {
   const [activeTabe, setActiveTabe] = useState("trucks");
+  const [trucks, setTrucks] = useState([]);
   console.log("active  :", activeTabe);
+
+  async function handelTrucks() {
+    setActiveTabe("trucks");
+    const data = await getTrucks(token);
+    setTrucks(data.trucks);
+  }
 
   return (
     <div className="w-100">
@@ -16,7 +25,7 @@ export default function AdminLayout({token}) {
             <button
               type="button"
               className={`nav-link ${activeTabe === "trucks" ? "active" : ""}`}
-              onClick={() => setActiveTabe("trucks")}
+              onClick={handelTrucks}
             >
               Camions
             </button>
@@ -25,7 +34,7 @@ export default function AdminLayout({token}) {
             {/* <!-- Onglet inactif --> */}
             <button
               type="button"
-              className={`nav-link ${activeTabe==='users'? "active" : ""}`}
+              className={`nav-link ${activeTabe === "users" ? "active" : ""}`}
               onClick={() => setActiveTabe("users")}
             >
               Utilisateurs
@@ -37,7 +46,7 @@ export default function AdminLayout({token}) {
       {/* <!-- Zone d'affichage du contenu selon l'onglet sélectionné --> */}
       <div className="bg-white p-4 rounded shadow-sm border">
         {activeTabe == "trucks" ? (
-          <p className="text-muted">trucks</p>
+            <TruckList token={token} trucks={trucks} />
         ) : (
           <p className="text-muted">users</p>
         )}
