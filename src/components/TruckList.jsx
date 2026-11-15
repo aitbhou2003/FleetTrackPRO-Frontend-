@@ -1,16 +1,23 @@
 import { useState } from "react";
 import { getTrucks } from "../api/trucks";
 import TruckCared from "./TruckCard";
+import TruckForm from "./TruckForm";
 
-export default function TruckList({ trucks, token }) {
-  const [searchItem, setSearchItem] = useState('');
+export default function TruckList({ trucks, token, setTrucks }) {
+  const [searchItem, setSearchItem] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
   const trucksFiltred = trucks.filter((truck) => {
-    const search = searchItem.toLocaleLowerCase()
-    const immat = truck.immatriculation.toLocaleLowerCase()
-    const marque = truck.marque.toLocaleLowerCase()
-    return immat.includes(search) || marque.includes(search)
+    const search = searchItem.toLocaleLowerCase();
+    const immat = truck.immatriculation.toLocaleLowerCase();
+    const marque = truck.marque.toLocaleLowerCase();
+    return immat.includes(search) || marque.includes(search);
   });
+
+  function handleTruckCreated(newTruck) {
+    setTrucks((prevTrucks) => [newTruck, ...prevTrucks]);
+    setShowForm(false);
+  }
 
   return (
     <div className="w-100">
@@ -23,10 +30,21 @@ export default function TruckList({ trucks, token }) {
           </span>
         </div>
 
-        <button type="button" className="btn btn-primary btn-sm">
+        <button
+          type="button"
+          className="btn btn-primary btn-sm"
+          onClick={() => setShowForm(!showForm)}
+        >
           + Ajouter un camion
         </button>
       </div>
+      {showForm && (
+        <TruckForm
+          token={token}
+          onClose={() => setShowForm(false)}
+          onTruckCreated={handleTruckCreated}
+        />
+      )}
 
       {/* <!-- Barre de filtre/recherche locale --> */}
       <div className="mb-4">
