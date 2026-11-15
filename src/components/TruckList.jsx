@@ -3,6 +3,15 @@ import { getTrucks } from "../api/trucks";
 import TruckCared from "./TruckCard";
 
 export default function TruckList({ trucks, token }) {
+  const [searchItem, setSearchItem] = useState('');
+
+  const trucksFiltred = trucks.filter((truck) => {
+    const search = searchItem.toLocaleLowerCase()
+    const immat = truck.immatriculation.toLocaleLowerCase()
+    const marque = truck.marque.toLocaleLowerCase()
+    return immat.includes(search) || marque.includes(search)
+  });
+
   return (
     <div className="w-100">
       {/* <!-- Barre d'outils : Titre + Bouton Ajouter --> */}
@@ -10,7 +19,7 @@ export default function TruckList({ trucks, token }) {
         <div>
           <h4 className="fw-bold text-dark mb-0">Gestion de la Flotte</h4>
           <span className="text-muted small">
-            Total : {trucks.length} camion(s)
+            Total : {trucksFiltred.length} camion(s)
           </span>
         </div>
 
@@ -22,6 +31,8 @@ export default function TruckList({ trucks, token }) {
       {/* <!-- Barre de filtre/recherche locale --> */}
       <div className="mb-4">
         <input
+          value={searchItem}
+          onChange={(e) => setSearchItem(e.target.value)}
           type="text"
           className="form-control"
           placeholder="Rechercher par immatriculation ou modèle..."
@@ -29,13 +40,13 @@ export default function TruckList({ trucks, token }) {
       </div>
 
       {/* <!-- Grille des camions (pour le .map) --> */}
-      {trucks.length === 0 ? (
+      {trucksFiltred.length === 0 ? (
         <div className="alert alert-info text-center my-4" role="alert">
           Aucun camion trouvé.
         </div>
       ) : (
         <div className="row g-3">
-          {trucks.map((truck) => (
+          {trucksFiltred.map((truck) => (
             <div className="col-12 col-md-6 col-lg-4" key={truck._id}>
               <TruckCared truck={truck} />
             </div>
