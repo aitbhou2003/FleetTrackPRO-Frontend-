@@ -39,7 +39,7 @@ export default function DriverLayout({ user, token }) {
         <div className="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
           <div>
             <h4 className="fw-bold text-dark mb-0">Mes Trajets & Missions</h4>
-            <span className="text-muted small">Total : 0 mission(s)</span>
+            <span className="text-muted small">Total : {trips.length} mission(s)</span>
           </div>
 
           {/* <!-- Bouton pour actualiser / charger les missions depuis l'API --> */}
