@@ -1,4 +1,4 @@
-export function TripCard({ trip }) {
+export function TripCard({trip}) {
   return (
     <div className="card shadow-sm border-0 mb-3">
       <div className="card-body">
@@ -12,12 +12,10 @@ export function TripCard({ trip }) {
 
         <div className="row text-muted small mt-3">
           <div className="col-6">
-            <strong>Date départ :</strong>{" "}
-            {new Date(trip.dateDebutPrevue).toLocaleDateString("en-GB")}
+            <strong>Date départ :</strong> {new Date(trip.dateDebutPrevue).toLocaleDateString('en-GB')}
           </div>
           <div className="col-6">
-            <strong>Camion :</strong>{" "}
-            {`${trip.camion.marque} (${trip.camion.immatriculation})`}
+            <strong>Camion :</strong> {`${trip.camion.marque} (${trip.camion.immatriculation})`}
           </div>
         </div>
       </div>
