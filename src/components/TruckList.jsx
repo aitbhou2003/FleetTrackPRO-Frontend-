@@ -18,6 +18,12 @@ export default function TruckList({ trucks, token, setTrucks }) {
     setShowForm(false);
   }
 
+  function hundelDeletedTruck(deletedId) {
+    setTrucks((prevTrucks) =>
+      prevTrucks.filter((truck) => truck._id !== deletedId),
+    );
+  }
+
   return (
     <div className="w-100">
       {/* <!-- Barre d'outils : Titre + Bouton Ajouter --> */}
@@ -65,7 +71,11 @@ export default function TruckList({ trucks, token, setTrucks }) {
         <div className="row g-3">
           {trucksFiltred.map((truck) => (
             <div className="col-12 col-md-6 col-lg-4" key={truck._id}>
-              <TruckCared truck={truck} />
+              <TruckCared
+                truck={truck}
+                token={token}
+                onDeleteTruck={hundelDeletedTruck}
+              />
             </div>
           ))}
         </div>
