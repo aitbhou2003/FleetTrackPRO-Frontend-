@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { getTrucks } from "../api/trucks";
 import TruckCared from "./TruckCard";
 import TruckForm from "./TruckForm";
 
