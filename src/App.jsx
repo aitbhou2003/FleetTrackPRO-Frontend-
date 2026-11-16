@@ -3,6 +3,7 @@ import AppShell from "./components/AppShell";
 import LoginForm from "./components/LoginForm";
 import AdminLayout from "./components/AdminLayout";
 import DriverLayout from "./components/DriverLayout";
+import ProtectedView from "./components/ProtectedView";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -25,9 +26,13 @@ export default function App() {
     <>
       <AppShell user={user} onLogout={handelLogOut}>
         {user.userRole === "admin" ? (
-          <AdminLayout token={token} />
+          <ProtectedView user={user} allowedRoles={["admin"]}>
+            <AdminLayout token={token} />
+          </ProtectedView>
         ) : (
-          <DriverLayout token={token} user={user} />
+          <ProtectedView user={user} allowedRoles={['chauffeur']}>
+            <DriverLayout token={token} user={user} />
+          </ProtectedView>
         )}
       </AppShell>
     </>
