@@ -1,4 +1,20 @@
-export default function TruckCared({ truck }) {
+import { deleteTruck } from "../api/trucks";
+
+export default function TruckCared({ truck, token, onDeleteTruck }) {
+  async function hundelDelete(token, truckId) {
+    window.confirm(
+      `Voulez-vous supprimer le camion ${truck.immatriculation} ?`,
+    );
+
+    try {
+      await deleteTruck(token, truckId);
+      onDeleteTruck(truck._id);
+    } catch (error) {
+      console.log("delete error ", error.message);
+      alert("error lors de supprission");
+    }
+  }
+
   return (
     <div className="card shadow-sm h-100 border-0">
       <div className="card-body d-flex flex-column justify-content-between">
@@ -28,7 +44,11 @@ export default function TruckCared({ truck }) {
           >
             Voir détails
           </button>
-          <button type="button" className="btn btn-sm btn-outline-danger">
+          <button
+            type="button"
+            className="btn btn-sm btn-outline-danger"
+            onClick={() => hundelDelete(token, truck._id)}
+          >
             Supprimer
           </button>
         </div>
