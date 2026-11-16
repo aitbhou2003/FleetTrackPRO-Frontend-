@@ -1,12 +1,11 @@
-export default function TruckCared({truck}) {
-    
+export default function TruckCared({ truck }) {
   return (
     <div className="card shadow-sm h-100 border-0">
       <div className="card-body d-flex flex-column justify-content-between">
         <div>
           <div className="d-flex justify-content-between align-items-start mb-2">
             <h5 className="card-title fw-bold text-dark mb-0">
-                                                                    ({truck.immatriculation})
+              ({truck.immatriculation})
             </h5>
             {/* <!-- Badge de statut : vert si disponible, jaune si en_mission, rouge si en_maintenance --> */}
             <span className="badge bg-success">{truck.statut}</span>
