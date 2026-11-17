@@ -2,10 +2,16 @@ import { deleteTruck } from "../api/trucks";
 
 export default function TruckCared({ truck, token, onDeleteTruck }) {
   async function hundelDelete(token, truckId) {
-    window.confirm(
-      `Voulez-vous supprimer le camion ${truck.immatriculation} ?`,
-    );
-
+    // window.confirm(
+    //   `Voulez-vous supprimer le camion ${truck.immatriculation} ?`,
+    // );
+    if (
+      !window.confirm(
+        `Voulez-vous supprimer le camion ${truck.immatriculation} ?`,
+      )
+    ) {
+      return;
+    }
     try {
       await deleteTruck(token, truckId);
       onDeleteTruck(truck._id);
