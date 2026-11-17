@@ -1,10 +1,12 @@
 import { useState } from "react";
 import TruckCared from "./TruckCard";
 import TruckForm from "./TruckForm";
+import TruckEditModal from "./TruckEditModal";
 
 export default function TruckList({ trucks, token, setTrucks }) {
   const [searchItem, setSearchItem] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [editTruck, setEditTruck] = useState(null);
 
   const trucksFiltred = trucks.filter((truck) => {
     const search = searchItem.toLocaleLowerCase();
@@ -22,6 +24,13 @@ export default function TruckList({ trucks, token, setTrucks }) {
     setTrucks((prevTrucks) =>
       prevTrucks.filter((truck) => truck._id !== deletedId),
     );
+  }
+
+  function hundelTruckUpdated(updatedTruck) {
+    setTrucks((prevTrucks) =>
+      prevTrucks.map((t) => (t._id === updatedTruck._id ? updatedTruck : t)),
+    );
+    setEditTruck(null);
   }
 
   return (
@@ -75,10 +84,19 @@ export default function TruckList({ trucks, token, setTrucks }) {
                 truck={truck}
                 token={token}
                 onDeleteTruck={hundelDeletedTruck}
+                onEdit={(truck) => setEditTruck(truck)}
               />
             </div>
           ))}
         </div>
+      )}
+      {editTruck && (
+        <TruckEditModal
+          token={token}
+          truck={editTruck}
+          onClose={() => setEditTruck(null)}
+          ontruckUpdated={hundelTruckUpdated}
+        />
       )}
     </div>
   );
