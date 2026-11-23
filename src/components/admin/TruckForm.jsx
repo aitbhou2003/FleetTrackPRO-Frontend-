@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createTruck } from "../api/trucks";
+import { createTruck } from "../../api/trucks";
 
 export default function TruckForm({ token, onTruckCreated, onClose }) {
   const [immatriculation, setImmatruculation] = useState("");

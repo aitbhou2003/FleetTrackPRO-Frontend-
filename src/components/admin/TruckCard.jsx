@@ -1,4 +1,4 @@
-import { deleteTruck } from "../api/trucks";
+import { deleteTruck } from "../../api/trucks";
 
 export default function TruckCared({ truck, token, onDeleteTruck, onEdit }) {
   async function hundelDelete(token, truckId) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getMyTrips } from "../api/trips";
+import { getMyTrips } from "../../api/trips";
 import { TripCard } from "./TripCard";
 import { NavLink, Outlet } from "react-router-dom";
 

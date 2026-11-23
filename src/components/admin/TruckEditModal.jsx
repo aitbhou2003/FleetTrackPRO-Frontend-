@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updateTruck } from "../api/trucks";
+import { updateTruck } from "../../api/trucks";
 
 export default function TruckEditModal({
   truck,

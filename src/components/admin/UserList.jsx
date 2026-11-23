@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import UserForm from "./UserForm";
-import { getUSers } from "../api/users";
+import { getUSers } from "../../api/users";
 
 export default function UserList({ token }) {
   const [searchItem, setSearchItem] = useState("");

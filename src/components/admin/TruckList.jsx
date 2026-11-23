@@ -3,7 +3,7 @@ import TruckCared from "./TruckCard";
 import TruckForm from "./TruckForm";
 import TruckEditModal from "./TruckEditModal";
 import { useEffect } from "react";
-import { getTrucks } from "../api/trucks";
+import { getTrucks } from "../../api/trucks";
 
 export default function TruckList({ token }) {
   const [searchItem, setSearchItem] = useState("");

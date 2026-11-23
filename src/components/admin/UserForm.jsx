@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUser } from "../api/users";
+import { createUser } from "../../api/users";
 
 export default function UserForm({ token, onUserCreated, onClose }) {
   const [firstName, setFisrtName] = useState("");

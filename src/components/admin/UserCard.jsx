@@ -1,4 +1,4 @@
-import { suspendUser, activateUser } from "../api/users";
+import { suspendUser, activateUser } from "../../api/users";
 
 export default function UserCard({ user, token, onStatueChange }) {
   async function hundelSuspend(userId, token) {
