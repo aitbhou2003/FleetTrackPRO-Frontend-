@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getMyTrips } from "../api/trips";
 import { TripCard } from "./TripCard";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function DriverLayout({ user, token }) {
   const [erreur, setErreur] = useState("");
@@ -10,7 +11,7 @@ export default function DriverLayout({ user, token }) {
     try {
       const res = await getMyTrips(token);
       setTrips(res.trajets);
-      console.log("trips",res)
+      console.log("trips", res);
     } catch (error) {
       setErreur(error.message);
     }
@@ -38,28 +39,27 @@ export default function DriverLayout({ user, token }) {
       <div className="card shadow-sm border-0 p-4">
         <div className="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
           <div>
-            <h4 className="fw-bold text-dark mb-0">Mes Trajets & Missions</h4>
-            <span className="text-muted small">Total : {trips.length} mission(s)</span>
+            <h4 className="fw-bold text-dark mb-0">Mes Trajets</h4>
+            <span className="text-muted small">
+              Total : {trips.length} mission(s)
+            </span>
           </div>
 
           {/* <!-- Bouton pour actualiser / charger les missions depuis l'API --> */}
-          <button
-            type="button"
+          <NavLink
             className="btn btn-outline-primary btn-sm"
-            onClick={hundelTrips}
+            to={"/chauffeur/trajets"}
           >
             Actualiser mes trajets
-          </button>
+          </NavLink>
         </div>
 
-        {/* <!-- Alerte d'erreur éventuelle --> */}
-        {erreur && (
+        {/* {erreur && (
           <div className="alert alert-danger py-2 small" role="alert">
             {erreur}
           </div>
         )}
 
-        {/* <!-- Si aucun trajet : Alerte état vide --> */}
         {trips.length == 0 ? (
           <div className="alert alert-info text-center my-3" role="alert">
             Aucun trajet assigné pour le moment.
@@ -70,7 +70,9 @@ export default function DriverLayout({ user, token }) {
               <TripCard trip={trip} />
             </div>
           ))
-        )}
+        )} */}
+
+        <Outlet />
       </div>
     </div>
   );
