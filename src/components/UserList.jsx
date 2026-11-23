@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import UserForm from "./UserForm";
+import { getUSers } from "../api/users";
 
-export default function UserList({ token, users, setUser }) {
+export default function UserList({ token }) {
   const [searchItem, setSearchItem] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [users, setUser] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const usersFiltred = users.filter((user) => {
     const search = searchItem.toLocaleLowerCase();
@@ -30,6 +33,23 @@ export default function UserList({ token, users, setUser }) {
       ),
     );
   }
+
+  useEffect(() => {
+    async function loadUsers() {
+      try {
+        const data = await getUSers(token);
+        setUser(data.users);
+      } catch (error) {
+        console.error("loading users error :", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (token) {
+      loadUsers()
+    }
+  },[token]);
   return (
     <div className="w-100">
       {/* <!-- Barre d'outils : Titre + Bouton Ajouter --> */}
