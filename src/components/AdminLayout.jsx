@@ -1,25 +1,22 @@
 import { useState } from "react";
-import { getTrucks } from "../api/trucks";
-import TruckList from "./TruckList";
-import UserList from "./UserList";
-import { getUSers } from "../api/users";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function AdminLayout({ token }) {
   const [activeTabe, setActiveTabe] = useState("trucks");
-  const [trucks, setTrucks] = useState([]);
-  const [users, setUsers] = useState([]);
+  // const [trucks, setTrucks] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  async function handelTrucks() {
-    setActiveTabe("trucks");
-    const data = await getTrucks(token);
-    setTrucks(data.trucks);
-  }
+  // async function handelTrucks() {
+  //   setActiveTabe("trucks");
+  //   const data = await getTrucks(token);
+  //   setTrucks(data.trucks);
+  // }
 
-  async function hundelUsers() {
-    setActiveTabe("users");
-    const data = await getUSers(token);
-    setUsers(data.users);
-  }
+  // async function hundelUsers() {
+  //   setActiveTabe("users");
+  //   const data = await getUSers(token);
+  //   setUsers(data.users);
+  // }
 
   return (
     <div className="w-100">
@@ -30,34 +27,57 @@ export default function AdminLayout({ token }) {
         <ul className="nav nav-pills">
           <li className="nav-item">
             {/* <!-- Onglet actif : ajouter la classe 'active' sur le bouton --> */}
-            <button
-              type="button"
-              className={`nav-link ${activeTabe === "trucks" ? "active" : ""}`}
-              onClick={handelTrucks}
+            <NavLink
+              to={"/admin/camions"}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
             >
               Camions
-            </button>
+            </NavLink>
           </li>
           <li className="nav-item">
             {/* <!-- Onglet inactif --> */}
-            <button
-              type="button"
-              className={`nav-link ${activeTabe === "users" ? "active" : ""}`}
-              onClick={hundelUsers}
+            <NavLink
+              to={"/admin/utilisateurs"}
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
             >
               Utilisateurs
-            </button>
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/admin/trajets"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              Trajets
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/admin/remorques"
+              className={({ isActive }) =>
+                `nav-link ${isActive ? "active" : ""}`
+              }
+            >
+              Remorques
+            </NavLink>
           </li>
         </ul>
       </div>
 
       {/* <!-- Zone d'affichage du contenu selon l'onglet sélectionné --> */}
       <div className="bg-white p-4 rounded shadow-sm border">
-        {activeTabe == "trucks" ? (
+        {/* {activeTabe == "trucks" ? (
           <TruckList token={token} trucks={trucks} setTrucks={setTrucks} />
         ) : (
-            <UserList token={token} users={users} setUser={setUsers} />
-        )}
+          <UserList token={token} users={users} setUser={setUsers} />
+        )} */}
+        <Outlet />
       </div>
     </div>
   );
