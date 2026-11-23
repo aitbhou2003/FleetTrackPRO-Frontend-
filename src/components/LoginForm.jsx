@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { loginUser } from "../api/auth";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({ onLoginSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erorr, setErorr] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handelLogin(e) {
     e.preventDefault();
@@ -23,6 +25,11 @@ export default function LoginForm({ onLoginSuccess }) {
       const decodeUder = jwtDecode(res.token);
       if (onLoginSuccess) {
         onLoginSuccess(decodeUder, res.token);
+        if (decodeUder.userRole === "admin") {
+          navigate("/admin/camions");
+        } else {
+          navigate("/chauffeur/trajets");
+        }
       }
     } catch (error) {
       setErorr(error.message);
@@ -84,8 +91,6 @@ export default function LoginForm({ onLoginSuccess }) {
           >
             {loading ? "Loading..." : "Login"}
           </button>
-
-
         </form>
       </div>
     </div>
