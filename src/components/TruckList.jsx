@@ -2,11 +2,15 @@ import { useState } from "react";
 import TruckCared from "./TruckCard";
 import TruckForm from "./TruckForm";
 import TruckEditModal from "./TruckEditModal";
+import { useEffect } from "react";
+import { getTrucks } from "../api/trucks";
 
-export default function TruckList({ trucks, token, setTrucks }) {
+export default function TruckList({ token }) {
   const [searchItem, setSearchItem] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editTruck, setEditTruck] = useState(null);
+  const [trucks, setTrucks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const trucksFiltred = trucks.filter((truck) => {
     const search = searchItem.toLocaleLowerCase();
@@ -32,6 +36,22 @@ export default function TruckList({ trucks, token, setTrucks }) {
     );
     setEditTruck(null);
   }
+
+  useEffect(() => {
+    async function loadTrucks() {
+      try {
+        const data = await getTrucks(token);
+        setTrucks(data.trucks || []);
+      } catch (error) {
+        console.error("loading trucks error : ", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (token) {
+      loadTrucks();
+    }
+  }, [token]);
 
   return (
     <div className="w-100">
