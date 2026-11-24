@@ -38,7 +38,7 @@ export default function UserList({ token }) {
     async function loadUsers() {
       try {
         const data = await getUSers(token);
-        setUser(data.users);
+        setUser(data.users || []);
       } catch (error) {
         console.error("loading users error :", error);
       } finally {

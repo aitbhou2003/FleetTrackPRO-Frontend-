@@ -8,6 +8,7 @@ import TruckList from "../components/admin/TruckList";
 import UserList from "../components/admin/UserList";
 import NotFound404 from "../pages/NotFound404";
 import Forbidden403 from "../pages/Forbidden403";
+import RemorqueList from "../components/admin/RemorqueList";
 
 export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
   return (
@@ -47,6 +48,10 @@ export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
         <Route index element={<Navigate to={"/admin/camions"} replace />} />
         <Route path="camions" element={<TruckList token={token} />} />
         <Route path="utilisateurs" element={<UserList token={token} />} />
+        <Route path="remorques" element={<RemorqueList token={token} />} />
+        {/* <Route path="remorques/nouveau" element={<RemorqueForm token={token} />} /> */}
+
+  
       </Route>
 
       <Route
