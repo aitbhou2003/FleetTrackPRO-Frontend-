@@ -65,7 +65,7 @@ export default function RemorqueList({ token }) {
           <div className="row g-3">
             {remorquesFiltred.map((rem) => (
               <div className="col-12 col-md-6 col-lg-4" key={rem._id}>
-                <RemorqueCard remorque={rem} />
+                <RemorqueCard token={token} remorque={rem} />
               </div>
             ))}
           </div>
