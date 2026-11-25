@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function NotFound404() {
+
+    const navigate = useNavigate()
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center">
       <div
@@ -10,7 +14,7 @@ export default function NotFound404() {
         <p className="text-muted mb-4">
           L'URL demandée n'existe pas ou a été déplacée.
         </p>
-        <button type="button" className="btn btn-outline-primary">
+        <button type="button" className="btn btn-outline-primary" onClick={()=>navigate(-1)}>
           Retour à l'accueil
         </button>
       </div>
