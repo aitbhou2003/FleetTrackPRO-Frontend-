@@ -12,6 +12,7 @@ import RemorqueList from "../components/admin/RemorqueList";
 import RemorqueForm from "../components/admin/RemorqueForm";
 import RemorqueDetail from "../components/admin/RemorqueDetail";
 import TripList from "../components/admin/TripList";
+import TripForm from "../components/admin/TripForm";
 
 export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
   return (
@@ -61,6 +62,7 @@ export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
           element={<RemorqueDetail token={token} />}
         />
         <Route path="trajets" element={<TripList token={token} />} />
+        <Route path="trajets/nouveau" element={<TripForm token={token} />} />
       </Route>
 
       <Route

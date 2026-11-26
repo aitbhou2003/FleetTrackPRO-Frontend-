@@ -15,8 +15,8 @@ export default function TripList({ token }) {
       } catch (error) {
         console.error(error);
       }
-      trips();
     }
+    trips();
   }, [token]);
 
   const tripFiltred = trips.filter((trip) => {
