@@ -11,6 +11,7 @@ import Forbidden403 from "../pages/Forbidden403";
 import RemorqueList from "../components/admin/RemorqueList";
 import RemorqueForm from "../components/admin/RemorqueForm";
 import RemorqueDetail from "../components/admin/RemorqueDetail";
+import TripList from "../components/admin/TripList";
 
 export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
   return (
@@ -59,6 +60,7 @@ export default function AppRoutes({ token, user, onLoginSuccess, onLogout }) {
           path={`remorques/:id`}
           element={<RemorqueDetail token={token} />}
         />
+        <Route path="trajets" element={<TripList token={token} />} />
       </Route>
 
       <Route
