@@ -79,7 +79,9 @@ export async function createTrip(tripData, token) {
     }
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+      throw new Error(error.message);
+  }
 }
 
 export async function demarrerTrip(id, kilometrageDepart, token) {

@@ -8,26 +8,26 @@ export default function TripList({ token }) {
   const [searchItem, setSearchItem] = useState("");
 
   useEffect(() => {
-    try {
-      async function trips() {
+    async function trips() {
+      try {
         const res = await getTrips(token);
-        setTrips(res.trajets);
+        setTrips(res?.trajets || []);
+      } catch (error) {
+        console.error(error);
       }
       trips();
-    } catch (error) {
-      setErreur(error.message);
     }
   }, [token]);
 
   const tripFiltred = trips.filter((trip) => {
     const search = searchItem.toLocaleLowerCase();
-    const siteDepart = trip.siteDepart.toLocaleLowerCase();
-    const siteArrivee = trip.siteArrivee.toLocaleLowerCase();
+    const siteDepart = trip.siteDepart?.toLocaleLowerCase();
+    const siteArrivee = trip.siteArrivee?.toLocaleLowerCase();
     const chauffeur =
-      trip.chauffeur.firstName.toLocaleLowerCase() ||
-      trip.chauffeur.lastName.toLocaleLowerCase();
-    const camiom = trip.camion.marque.toLocaleLowerCase();
-    const remorque = trip.remorque.type.toLocaleLowerCase();
+      `${trip.chauffeur?.firstName} ${trip.chauffeur?.lastName}`.toLowerCase();
+
+    const camiom = trip.camion.marque?.toLocaleLowerCase();
+    const remorque = trip.remorque?.type.toLocaleLowerCase();
     return (
       siteDepart.includes(search) ||
       siteArrivee.includes(search) ||
@@ -45,7 +45,9 @@ export default function TripList({ token }) {
           <h4 className="fw-bold text-dark mb-0">
             Gestion des Trajets & Missions
           </h4>
-          <span className="text-muted small">Total : {tripFiltred.length} mission(s)</span>
+          <span className="text-muted small">
+            Total : {tripFiltred.length} mission(s)
+          </span>
         </div>
 
         <Link to="/admin/trajets/nouveau" className="btn btn-primary btn-sm">
@@ -81,4 +83,3 @@ export default function TripList({ token }) {
     </div>
   );
 }
-
